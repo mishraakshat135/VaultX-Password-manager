@@ -4,23 +4,58 @@ import hidden from "../assets/hidden.png"
 import { useRef, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom"
 
 
 const Manager = () => {
+
+   
+    const [visiblePasswords, setVisiblePasswords] = useState({});
+
+    const togglePasswordVisibility = (id) => {
+        setVisiblePasswords((prev) => ({
+            ...prev,
+            [id]: !prev[id]
+        }));
+    }
+
+    const navigate = useNavigate()
+    
+
+    useEffect(() => {
+
+        const token = localStorage.getItem("token")
+
+        if (!token) {
+            navigate("/login")
+            return
+        }
+
+        getPasswords()
+
+    }, [navigate])
+
+
+
     const ref = useRef()
     const passwordRef = useRef();
     const [form, setform] = useState({ site: "", username: "", password: "" })
     const [passwordArray, setPasswordArray] = useState([]);
 
-    const getPasswords = async ()=>{
-        let req= await fetch("http://localhost:3000/")
+    const getPasswords = async () => {
+        const token = localStorage.getItem("token")
+        let req = await fetch("http://localhost:3000/", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         let passwords = await req.json()
         setPasswordArray(passwords);
     }
 
-    useEffect(() => {
-        getPasswords()
-    }, []);
+    // useEffect(() => {
+    //     getPasswords()
+    // }, []);
 
     const showPassword = () => {
         passwordRef.current.type = "text";
@@ -37,60 +72,72 @@ const Manager = () => {
 
 
     const savePassword = async () => {
-        if(form.site.length >3 && form.username.length >3 && form.password.length  >3){
-        if(form.id){
-        await fetch("http://localhost:3000/", {method:"DELETE", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({id: form.id })})}
-        const id = uuidv4()
-        setPasswordArray([...passwordArray, {...form, id}])
-        await fetch("http://localhost:3000/", {method:"POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({...form, id })})
-        //localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id:uuidv4()}]))
-        setform({site:"", username:"", password:""})
-        toast('Password Saved', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+        if (form.site.length > 3 && form.username.length > 3 && form.password.length > 3) {
+            if (form.id) {
 
-        });}
-        else{
+                const token = localStorage.getItem("token")
+                await fetch("http://localhost:3000/", {
+                    method: "DELETE", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ id: form.id })
+                })
+            }
+            const id = uuidv4()
+            setPasswordArray([...passwordArray, { ...form, id }])
+            const token = localStorage.getItem("token")
+
+            await fetch("http://localhost:3000/", {
+                method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ ...form, id })
+            })
+            //localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id:uuidv4()}]))
+            setform({ site: "", username: "", password: "" })
+            toast('Password Saved', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+
+            });
+        }
+        else {
             toast("Error: Password not saved")
         }
     }
 
     const deletePassword = async (id) => {
         let c = confirm("Do u really want to delete the password?")
-        if(c){
-         setPasswordArray(passwordArray.filter(item=>item.id!==id))
-         
-        await fetch("http://localhost:3000/", {method:"DELETE", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({...form, id })})
+        if (c) {
+            setPasswordArray(passwordArray.filter(item => item.id !== id))
+            const token = localStorage.getItem("token")
+            await fetch("http://localhost:3000/", {
+                method: "DELETE", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ ...form, id })
+            })
 
-         //localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item=>item.id!==id)))
-         toast('Password Deleted', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+            //localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item=>item.id!==id)))
+            toast('Password Deleted', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
 
-        });
-        await getPasswords()
+            });
+            await getPasswords()
         }
     }
 
-        const editPassword = (id) => {
-        setform({...passwordArray.filter(i=>i.id===id)[0], id: id})
-        setPasswordArray(passwordArray.filter(item=>item.id!==id))
-        
+    const editPassword = (id) => {
+        setform({ ...passwordArray.filter(i => i.id === id)[0], id: id })
+        setPasswordArray(passwordArray.filter(item => item.id !== id))
+
     }
 
 
@@ -152,7 +199,7 @@ const Manager = () => {
 
 
 
-                        <input value={form.username} onChange={handleChange} placeholder="Enter username" className="rounded-full border border-green-500 w-full  py-1 p-4 " type="text" name="username" id="username"/>
+                        <input value={form.username} onChange={handleChange} placeholder="Enter username" className="rounded-full border border-green-500 w-full  py-1 p-4 " type="text" name="username" id="username" />
 
                         <div className="relative">
                             <input ref={passwordRef} value={form.password} onChange={handleChange} placeholder="Enter password" className="rounded-full border border-green-500 w-full  py-1 p-4" type="password" name="password" id="password" />
@@ -174,7 +221,7 @@ const Manager = () => {
                 <div className="passwords">
                     <h2 className="font-bold text-2xl py-4 ">Passwords</h2>
                     {passwordArray.length === 0 && <div>No passwords to show</div>}
-                    {passwordArray.length != 0 &&
+                    {passwordArray.length !== 0 &&
                         <table className="table-auto w-full rounded-md overflow-hidden mb-10">
                             <thead className="bg-green-800 text-white">
                                 <tr>
@@ -211,25 +258,42 @@ const Manager = () => {
                                                     </lord-icon></div></div>
                                         </td>
                                         <td className="py-2 border border-white text-center w-32">
-                                            <div className="flex justify-center items-center">
-                                                <span>{"*".repeat(item.password.length)}</span>
-                                                <div className="size-7 cursor-pointer " onClick={() => { copyText(item.password) }}>
+                                            <div className="flex gap-4 justify-center items-center">
+
+
+
+                                                <span>{visiblePasswords[item.id] ? item.password : "*".repeat(item.password.length)}</span>
+
+                                                <button
+                                                    onClick={() => togglePasswordVisibility(item.id)}
+                                                    className="cursor-pointer"
+                                                >
+                                                    <img
+                                                        src={visiblePasswords[item.id] ? hidden : eye}
+                                                        alt="toggle"
+                                                        className="w-5 h-5"
+                                                    />
+                                                </button>
+
+
+                                                {/* <div className="size-7 cursor-pointer " onClick={() => { copyText(item.password) }}>
                                                     <lord-icon
                                                         style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
                                                         src="https://cdn.lordicon.com/hmpomorl.json"
                                                         trigger="hover">
-                                                    </lord-icon></div></div>
+                                                    </lord-icon></div> */}
+                                                    </div>
                                         </td>
                                         <td className="py-2 border   border-white text-center w-32">
-                                        <span className="cursor-pointer mx-5" onClick={()=>{editPassword(item.id)}}><lord-icon
+                                            <span className="cursor-pointer mx-5" onClick={() => { editPassword(item.id) }}><lord-icon
                                                 src="https://cdn.lordicon.com/exymduqj.json"
                                                 trigger="hover"
                                             >
                                             </lord-icon></span>
-                                            <span className="cursor-pointer mx-5" onClick={()=>{deletePassword(item.id)}}><lord-icon
+                                            <span className="cursor-pointer mx-5" onClick={() => { deletePassword(item.id) }}><lord-icon
                                                 src="https://cdn.lordicon.com/jzinekkv.json"
                                                 trigger="hover"
-                                                >
+                                            >
                                             </lord-icon></span>
                                         </td>
 
