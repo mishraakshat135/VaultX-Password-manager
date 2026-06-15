@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import '../index.css'
 import github from "../assets/github.png"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-
+    const navigate = useNavigate()
     const [showDropdown, setShowDropdown] = useState(false);
     const email = localStorage.getItem("email");
     console.log("email:",localStorage.getItem("email"))
@@ -68,7 +68,7 @@ const Navbar = () => {
                                         onClick={() => {
                                             localStorage.removeItem("token")
                                             localStorage.removeItem("email")
-                                            window.location.href = "/login"
+                                           navigate("/login")
                                         }}
                                         className="w-full text-left px-4 py-3 text-red-600 hover:bg-gray-100"
                                     >
