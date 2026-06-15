@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import signupvault from '../assets/signup-vault.png'
+import logo from '../assets/logo.png'
+
 
 const Signup = () => {
 
@@ -33,8 +36,8 @@ const Signup = () => {
 
             if (data.success) {
                 alert("Account created successfully!")
-                window.location.href="/"
-                
+                window.location.href = "/"
+
             }
             else {
                 alert(data.message)
@@ -47,57 +50,123 @@ const Signup = () => {
     }
 
     return (
-        <div className="container mx-auto max-w-md p-8 mt-10">
+        <div className="min-h-screen relative text-white bg-[#050816]">
 
-            <h1 className="text-3xl font-bold text-center mb-6">
-                Create Account
-            </h1>
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-30 -right-20  h-180 w-180 rounded-full bg-green-500/20 blur-[120px]" />
+                <div className="absolute bottom-30 right-10 h-200 w-200 rounded-full bg-emerald-500/10 blur-[120px]" />
 
-            <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-4"
-            >
+                <div className="absolute  h-150 w-150  bg-green-500/20 blur-[120px]" />
+            </div>
+            <div className=" absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#22c55e_1px,transparent_1px),linear-gradient(to_bottom,#22c55e_1px,transparent_1px)] bg-size-[60px_60px] pointer-events-none" />
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter Email"
-                    value={form.email}
-                    onChange={handleChange}
-                    className="border p-3 rounded"
-                    required
-                />
+            <div className="flex flex-col md:flex-row gap-10">
+                <div className="flex flex-col mt-16">
+                    <div className=" text-center py-12 px-18">
+                        <h1 className="text-6xl font-bold">
+                            <span className="text-green-500">&lt;</span>
+                            Vault
+                            <span className="text-green-500">X/&gt;</span>
+                        </h1>
+                        <p className="text-gray-400 text-xl mt-4 mb-8 ">Secure. Store. Access Anytime.</p>
+                    </div>
+                    <div className="grid grid-cols-1 ml-20 w-70  gap-4 -mt-9">
+                        <div className="px-12 bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>🔒 End-to-End Encrypted</h3>
+                            <p className="text-gray-400 text-sm">
+                                Your data is 100% private
+                            </p>
+                        </div>
+                        <div className="px-12 bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>🛡 Secure Storage</h3>
+                            <p className="text-gray-400 text-sm">
+                                Military-grade encryption
+                            </p>
+                        </div>
+                        <div className="px-12 bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>⚡ Quick Access</h3>
+                            <p className="text-gray-400 text-sm">
+                                Get your passwords instantly
+                            </p>
+                        </div>
+                        <div className="px-12 bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>☁ Always Available</h3>
+                            <p className="text-gray-400 text-sm">
+                                Access anywhere, anytime
+                            </p>
+                        </div>
+                    </div>
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    value={form.password}
-                    onChange={handleChange}
-                    className="border p-3 rounded"
-                    required
-                />
 
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white p-3 rounded"
-                >
-                    Sign Up
-                </button>
+                </div>
 
-            </form>
+                <div className="flex flex-col z-10 mt-30  bg-white/5 backdrop-blur-xl border border-green-500/20 rounded-3xl p-8 shadow-2xl container  mx-auto max-w-md">
 
-            <p className="mt-4 text-center">
-                Already have an account?{" "}
-                <Link
-                    to="/login"
-                    className="text-blue-500"
-                >
-                    Login
-                </Link>
-            </p>
+                    <img className="ml-36 mb-5 rounded-full w-20" src={logo} />
+                    <div className="mb-6 flex flex-col items-center">
+                        <h1 className="text-3xl font-bold text-center ">
+                            Sign Up
+                        </h1>
+                        <p className="text-slate-400">Create your VaultX account</p></div>
 
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-4"
+                    >
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter Email"
+                            value={form.email}
+                            onChange={handleChange}
+                            className="w-full bg-black/20 border border-green-500/20 rounded-xl px-4 py-4 outline-none focus:border-green-400 transition-all" type="text"
+                            required
+                        />
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter Password"
+                            value={form.password}
+                            onChange={handleChange}
+                            className="w-full bg-black/20 border border-green-500/20 rounded-xl px-4 py-4 outline-none focus:border-green-400 transition-all" type="text"
+                            required
+                        />
+
+                        <button
+                            type="submit"
+                            className="flex justify-center items-center gap-5 bg-green-600 hover:bg-green-500 transition-all px-8 py-3 rounded-xl font-semibold shadow-lg shadow-green-500/30"
+                        >
+                            Sign Up
+                        </button>
+
+                    </form>
+
+                    <p className="mt-4 text-center">
+                        Already have an account?{" "}
+                        <Link
+                            to="/login"
+                            className="text-blue-500"
+                        >
+                            Login
+                        </Link>
+                    </p>
+
+                </div>
+
+
+                <div>
+                    <img src={signupvault} className="w-120 mt-40 -ml-20 brightness-120 contrast-105 opacity-70" />
+
+
+
+                </div>
+
+
+            </div>
         </div>
+
     )
 }
 

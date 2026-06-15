@@ -5,11 +5,12 @@ import { useRef, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom"
+import vault from "../assets/vault.png";
 
 
 const Manager = () => {
 
-   
+
     const [visiblePasswords, setVisiblePasswords] = useState({});
 
     const togglePasswordVisibility = (id) => {
@@ -20,7 +21,7 @@ const Manager = () => {
     }
 
     const navigate = useNavigate()
-    
+
 
     useEffect(() => {
 
@@ -164,7 +165,7 @@ const Manager = () => {
     return (
 
 
-        <div>
+        <div >
 
             <ToastContainer
                 position="top-right"
@@ -180,131 +181,185 @@ const Manager = () => {
 
             />
 
+            <div className="min-h-screen bg-[#050816] text-white relative">
+
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-0 right-30  h-50 w-100 rounded-full bg-green-700 blur-[120px]" />
+                    <div className="absolute bottom-30 right-10 h-200 w-200 rounded-full bg-emerald-500/10 blur-[120px]" />
+                    <div className="absolute top-30 left-10  h-200 w-200  bg-green-500/20 blur-[120px]" />
 
 
-            <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]"><div className="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-green-500 opacity-20 blur-[100px]"></div></div>
-
-            <div className="px-4 md:px-40 md:mycontainer ">
-                <h1 className="text-4xl font-bold text-center">
-                    <span className="text-green-700">&lt;</span>
-                    Vault
-                    <span className="text-green-700">X/&gt;</span>
-                </h1>
-                <p className="text-green-900 text-lg text-center ">Your own Password Manager</p>
-
-
-                <div className="flex flex-col p-4 text-black items-center gap-8">
-                    <input value={form.site} onChange={handleChange} placeholder="Enter website Url" className="rounded-full border border-green-500 w-full py-1 px-4" type="text" name="site" id="site" />
-                    <div className="flex flex-col md:flex-row  w-full gap-8 justify-between">
-
-
-
-                        <input value={form.username} onChange={handleChange} placeholder="Enter username" className="rounded-full border border-green-500 w-full  py-1 p-4 " type="text" name="username" id="username" />
-
-                        <div className="relative">
-                            <input ref={passwordRef} value={form.password} onChange={handleChange} placeholder="Enter password" className="rounded-full border border-green-500 w-full  py-1 p-4" type="password" name="password" id="password" />
-                            <span className="absolute right-1 top-0.5 cursor-pointer" onClick={showPassword}>
-                                <img src={eye} className="p-1" width={30} ref={ref} />
-                            </span>
-
-                        </div>
-                    </div>
-                    <button onClick={savePassword} className="flex justify-center items-center bg-green-600 rounded-full px-2 py-2 w-fit hover:bg-green-500">
-                        <lord-icon
-                            src="https://cdn.lordicon.com/ueoydrft.json"
-                            trigger="hover">
-
-                        </lord-icon>
-                        Save Password</button>
                 </div>
 
-                <div className="passwords">
-                    <h2 className="font-bold text-2xl py-4 ">Passwords</h2>
-                    {passwordArray.length === 0 && <div>No passwords to show</div>}
-                    {passwordArray.length !== 0 &&
-                        <table className="table-auto w-full rounded-md overflow-hidden mb-10">
-                            <thead className="bg-green-800 text-white">
-                                <tr>
-                                    <th className="py-2">Site</th>
-                                    <th className="py-2">Username</th>
-                                    <th className="py-2">Password</th>
-                                    <th className="py-2">Actions</th>
+                <div className=" absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#22c55e_1px,transparent_1px),linear-gradient(to_bottom,#22c55e_1px,transparent_1px)] bg-size-[60px_60px] pointer-events-none" />
 
-                                </tr>
-                            </thead>
-                            <tbody className="bg-green-100 ">
-                                {passwordArray.map((item, index) => {
+               
 
+                <div className="text-center py-12 px-18">
+                    <h1 className="text-6xl font-bold">
+                        <span className="text-green-500">&lt;</span>
+                        Vault
+                        <span className="text-green-500">X/&gt;</span>
+                    </h1>
+                    <p className="text-gray-400 text-xl mt-4 mb-8 ">Secure. Store. Access Anytime.</p>
+                    <div className="absolute w-45 right-60 top-3 hidden lg:block">
+                        <div className="absolute inset-0 bg-green-500/20 rounded-full blur-[80px]" />
+                        <img
+                            src={vault}
+                            alt="Vault"
+                            className="w-56 rounded-xl opacity-80 brightness-140 contrast-120 shadow-2xl"
+                        />
+                    </div>
 
-                                    return <tr key={index}>
-                                        <td className=" py-2 border border-white text-center w-32">
-                                            <div className="flex justify-center items-center">
-                                                <a href={item.site} target="_blank" >{item.site}</a>
-                                                <div className="size-7 cursor-pointer " onClick={() => { copyText(item.site) }}>
-                                                    <lord-icon
-                                                        style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
-                                                        src="https://cdn.lordicon.com/hmpomorl.json"
-                                                        trigger="hover">
-                                                    </lord-icon></div></div>
-                                        </td>
-                                        <td className=" py-2 border border-white text-center w-32">
-                                            <div className="flex justify-center items-center">
-                                                <span>{item.username}</span>
-                                                <div className="size-7 cursor-pointer " onClick={() => { copyText(item.username) }}>
-                                                    <lord-icon
-                                                        style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
-                                                        src="https://cdn.lordicon.com/hmpomorl.json"
-                                                        trigger="hover">
-                                                    </lord-icon></div></div>
-                                        </td>
-                                        <td className="py-2 border border-white text-center w-32">
-                                            <div className="flex gap-4 justify-center items-center">
+                    <div className="bg-white/5 backdrop-blur-xl border border-green-500/20 rounded-3xl p-8 shadow-2xl">
+
+                        <div className="flex flex-col p-4 text-white items-center gap-8">
+                            <input value={form.site} onChange={handleChange} placeholder="Enter website Url" className="w-full bg-black/20 border border-green-500/20 rounded-xl px-4 py-4 outline-none focus:border-green-400 transition-all" type="text" name="site" id="site" />
+                            <div className="flex flex-col md:flex-row  w-full gap-8 justify-between">
 
 
+                                <input value={form.username} onChange={handleChange} placeholder="Enter username" className="w-full bg-black/20 border border-green-500/20 rounded-xl px-4 py-4 outline-none focus:border-green-400 transition-all " type="text" name="username" id="username" />
 
-                                                <span>{visiblePasswords[item.id] ? item.password : "*".repeat(item.password.length)}</span>
+                                <div className=" relative">
 
-                                                <button
-                                                    onClick={() => togglePasswordVisibility(item.id)}
-                                                    className="cursor-pointer"
-                                                >
-                                                    <img
-                                                        src={visiblePasswords[item.id] ? hidden : eye}
-                                                        alt="toggle"
-                                                        className="w-5 h-5"
-                                                    />
-                                                </button>
+                                    <input ref={passwordRef} value={form.password} onChange={handleChange} placeholder="Enter password" className=" w-full bg-black/20 border border-green-500/20 rounded-xl px-4 py-4 outline-none focus:border-green-400 transition-all" type="password" name="password" id="password" />
+                                    <span className="absolute right-1 top-0.5 cursor-pointer" onClick={showPassword}>
+                                        <img src={eye} className="invert-100 mt-3 mr-2 p-1" width={30} ref={ref} />
+                                    </span>
+
+                                </div>
+                            </div>
+                            <button onClick={savePassword} className="flex items-center gap-5 bg-green-600 hover:bg-green-500 transition-all px-8 py-3 rounded-xl font-semibold shadow-lg shadow-green-500/30">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/ueoydrft.json"
+                                    trigger="hover">
+
+                                </lord-icon>
+                                Save Password</button>
+                        </div></div>
 
 
-                                                {/* <div className="size-7 cursor-pointer " onClick={() => { copyText(item.password) }}>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+                        <div className="bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>🔒 End-to-End Encrypted</h3>
+                            <p className="text-gray-400 text-sm">
+                                Your data is 100% private
+                            </p>
+                        </div>
+                        <div className="bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>🛡 Secure Storage</h3>
+                            <p className="text-gray-400 text-sm">
+                                Military-grade encryption
+                            </p>
+                        </div>
+                        <div className="bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>⚡ Quick Access</h3>
+                            <p className="text-gray-400 text-sm">
+                                Get your passwords instantly
+                            </p>
+                        </div>
+                        <div className="bg-white/5 border border-green-500/20 rounded-2xl p-5">
+                            <h3>☁ Always Available</h3>
+                            <p className="text-gray-400 text-sm">
+                                Access anywhere, anytime
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 className="font-bold text-4xl mt-15 -mb-3 ">Passwords</h2>
+                    <div className="passwords bg-white/5 border border-green-500/20 rounded-3xl overflow-hidden mt-10 backdrop-blur-xl">
+
+                        {passwordArray.length === 0 && <div>No passwords to show</div>}
+                        {passwordArray.length !== 0 &&
+                            <table className="table-auto w-full rounded-md overflow-hidden mb-10">
+                                <thead className="bg-green-600/20  text-green-200">
+                                    <tr className="border-b border-white/5 hover:bg-white/5 transition">
+                                        <th className="py-2">Site</th>
+                                        <th className="py-2">Username</th>
+                                        <th className="py-2">Password</th>
+                                        <th className="py-2">Actions</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white/5 text-slate-100 ">
+                                    {passwordArray.map((item, index) => {
+
+
+                                        return <tr key={index}>
+                                            <td className=" py-2 border border-green-500/20 text-center w-32">
+                                                <div className="flex justify-center items-center">
+                                                    <a href={item.site} target="_blank" >{item.site}</a>
+                                                    <div className="size-7 cursor-pointer " onClick={() => { copyText(item.site) }}>
+                                                        <lord-icon
+                                                            style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
+                                                            src="https://cdn.lordicon.com/hmpomorl.json"
+                                                            trigger="hover">
+                                                        </lord-icon></div></div>
+                                            </td>
+                                            <td className=" py-2 border border-green-500/20 text-center w-32">
+                                                <div className="flex justify-center items-center">
+                                                    <span>{item.username}</span>
+                                                    <div className="size-7 cursor-pointer " onClick={() => { copyText(item.username) }}>
+                                                        <lord-icon
+                                                            style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
+                                                            src="https://cdn.lordicon.com/hmpomorl.json"
+                                                            trigger="hover">
+                                                        </lord-icon></div></div>
+                                            </td>
+                                            <td className="py-2 border border-green-500/20 text-center w-32">
+                                                <div className="flex gap-4 justify-center items-center">
+
+
+
+                                                    <span>{visiblePasswords[item.id] ? item.password : "*".repeat(item.password.length)}</span>
+
+                                                    <button
+                                                        onClick={() => togglePasswordVisibility(item.id)}
+                                                        className="cursor-pointer"
+                                                    >
+                                                        <img
+                                                            src={visiblePasswords[item.id] ? hidden : eye}
+                                                            alt="toggle"
+                                                            className="w-5 h-5 invert-100"
+                                                        />
+                                                    </button>
+
+
+                                                    {/* <div className="size-7 cursor-pointer " onClick={() => { copyText(item.password) }}>
                                                     <lord-icon
                                                         style={{ "width": "25px", "height": "25px", "paddingTop": "3px", "paddingLeft": "3px" }}
                                                         src="https://cdn.lordicon.com/hmpomorl.json"
                                                         trigger="hover">
                                                     </lord-icon></div> */}
-                                                    </div>
-                                        </td>
-                                        <td className="py-2 border   border-white text-center w-32">
-                                            <span className="cursor-pointer mx-5" onClick={() => { editPassword(item.id) }}><lord-icon
-                                                src="https://cdn.lordicon.com/exymduqj.json"
-                                                trigger="hover"
-                                            >
-                                            </lord-icon></span>
-                                            <span className="cursor-pointer mx-5" onClick={() => { deletePassword(item.id) }}><lord-icon
-                                                src="https://cdn.lordicon.com/jzinekkv.json"
-                                                trigger="hover"
-                                            >
-                                            </lord-icon></span>
-                                        </td>
+                                                </div>
+                                            </td>
+                                            <td className="py-2 border   border-green-500/20 text-center w-32">
+                                                <span className="cursor-pointer mx-5" onClick={() => { editPassword(item.id) }}><lord-icon
+                                                    src="https://cdn.lordicon.com/exymduqj.json"
+                                                    trigger="hover"
+                                                >
+                                                </lord-icon></span>
+                                                <span className="cursor-pointer mx-5" onClick={() => { deletePassword(item.id) }}><lord-icon
+                                                    src="https://cdn.lordicon.com/jzinekkv.json"
+                                                    trigger="hover"
+                                                >
+                                                </lord-icon></span>
+                                            </td>
 
 
-                                    </tr>
-                                })}
-                            </tbody>
-                        </table>}
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>}
+                    </div>
+
+
+                    <div className="mt-10 bg-linear-to-r from-green-900/20 to-transparent border border-green-500/20 rounded-3xl p-6">
+                        <h1>🛡 Your vault is safe and secure.</h1>
+                        <p className="text-slate-400">You're in control of your data.</p>
+                    </div>
                 </div>
             </div>
-
         </div>
     )
 }

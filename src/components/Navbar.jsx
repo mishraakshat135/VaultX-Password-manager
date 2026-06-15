@@ -13,12 +13,12 @@ const Navbar = () => {
     const token = localStorage.getItem("token")
 
     return (
-        <nav className="bg-slate-800 text-white">
-            <div className="mycontainer flex justify-between items-center px-4 py-5 h-15">
+        <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-green-500/20 text-white">
+            <div className=" flex justify-between items-center px-4 py-5 h-15">
                 <div className="logo font-bold text-white text-2xl">
-                    <span className="text-green-700">{"<"}</span>
+                    <span className="text-green-500">{"<"}</span>
                     Vault
-                    <span className="text-green-700">{"X/>"}</span>
+                    <span className="text-green-500">{"X/>"}</span>
 
                 </div>
                 <ul>
@@ -38,11 +38,11 @@ const Navbar = () => {
                     )}
                     {token && (
                         <div className="relative">
-                            <button onClick={() => setShowDropdown(!showDropdown)} className=" flex items-center gap-2 bg-green-700 px-3 py-2 rounded-full hover:bg-green-600">
-                                <div className="w-8 h-8 rounded-full bg-white text-green-700 font-bold flex items-center justify-center">
+                            <button onClick={() => setShowDropdown(!showDropdown)} className=" flex items-center gap-3 bg-transparent px-3 py-2 rounded-full hover:bg-green-500">
+                                <div className="w-8 h-8 rounded-full font-bold text-white bg-green-500 flex items-center justify-center">
                                     {username[0].toUpperCase()}
                                 </div>
-                                <span>{username}</span>
+                                <span className="font-semibold">{username}</span>
                                 <svg
                                     className={`w-4 h-4 transition-transform ${showDropdown ? "rotate-180" : ""
                                         }`}
