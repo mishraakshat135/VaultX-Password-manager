@@ -18,11 +18,10 @@ const client = new MongoClient(process.env.MONGO_URI);
 // Database Name
 const dbName = 'VaultX';
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(bodyparser.json())
 app.use(cors())
 
-client.connect();
 
 
 app.get('/', auth, async (req, res) => {
@@ -86,9 +85,20 @@ app.delete('/', auth, async (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port http:localhost:${port}`);
-});
+async function startServer() {
+    try {
+        await client.connect();
+        console.log("MongoDB Connected");
+
+        app.listen(port, () => {
+            console.log(`Server running on port ${port}`);
+        });
+    } catch (error) {
+        console.error("MongoDB Connection Error:", error);
+    }
+}
+
+startServer();
 
 app.post('/signup', async (req, res) => {
 
