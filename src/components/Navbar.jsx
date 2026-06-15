@@ -42,7 +42,7 @@ const Navbar = () => {
                                 <div className="w-8 h-8 rounded-full font-bold text-white bg-green-500 flex items-center justify-center">
                                     {username[0].toUpperCase()}
                                 </div>
-                                <span className="font-semibold">{username}</span>
+                                <span className="hidden md:flex font-semibold">{username}</span>
                                 <svg
                                     className={`w-4 h-4 transition-transform ${showDropdown ? "rotate-180" : ""
                                         }`}

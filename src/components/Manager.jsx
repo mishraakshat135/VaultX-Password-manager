@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom"
 import vault from "../assets/vault.png";
+import { API_URL } from "../config";
 
 
 const Manager = () => {
@@ -45,7 +46,7 @@ const Manager = () => {
 
     const getPasswords = async () => {
         const token = localStorage.getItem("token")
-        let req = await fetch("http://localhost:3000/", {
+        let req = await fetch(`${API_URL}/`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -195,7 +196,7 @@ const Manager = () => {
 
                
 
-                <div className="text-center py-12 px-18">
+                <div className=" text-center py-12 md:px-18">
                     <h1 className="text-6xl font-bold">
                         <span className="text-green-500">&lt;</span>
                         Vault
@@ -207,7 +208,7 @@ const Manager = () => {
                         <img
                             src={vault}
                             alt="Vault"
-                            className="w-56 rounded-xl opacity-80 brightness-140 contrast-120 shadow-2xl"
+                            className="w-56 hidden md:flex rounded-xl opacity-80 brightness-140 contrast-120 shadow-2xl"
                         />
                     </div>
 
@@ -239,7 +240,7 @@ const Manager = () => {
                         </div></div>
 
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+                    <div className="hidden md:grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
                         <div className="bg-white/5 border border-green-500/20 rounded-2xl p-5">
                             <h3>🔒 End-to-End Encrypted</h3>
                             <p className="text-gray-400 text-sm">
@@ -267,7 +268,7 @@ const Manager = () => {
                     </div>
 
                     <h2 className="font-bold text-4xl mt-15 -mb-3 ">Passwords</h2>
-                    <div className="passwords bg-white/5 border border-green-500/20 rounded-3xl overflow-hidden mt-10 backdrop-blur-xl">
+                    <div className="passwords bg-white/5 border border-green-500/20 rounded-3xl  overflow-scroll md:overflow-hidden mt-10 backdrop-blur-xl">
 
                         {passwordArray.length === 0 && <div>No passwords to show</div>}
                         {passwordArray.length !== 0 &&
