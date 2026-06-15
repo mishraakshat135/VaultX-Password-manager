@@ -78,7 +78,7 @@ const Manager = () => {
             if (form.id) {
 
                 const token = localStorage.getItem("token")
-                await fetch("http://localhost:3000/", {
+                await fetch(`${API_URL}/`, {
                     method: "DELETE", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ id: form.id })
                 })
@@ -87,7 +87,7 @@ const Manager = () => {
             setPasswordArray([...passwordArray, { ...form, id }])
             const token = localStorage.getItem("token")
 
-            await fetch("http://localhost:3000/", {
+            await fetch(`${API_URL}/`, {
                 method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ ...form, id })
             })
@@ -115,7 +115,7 @@ const Manager = () => {
         if (c) {
             setPasswordArray(passwordArray.filter(item => item.id !== id))
             const token = localStorage.getItem("token")
-            await fetch("http://localhost:3000/", {
+            await fetch(`${API_URL}/`, {
                 method: "DELETE", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ ...form, id })
             })

@@ -12,7 +12,7 @@ const auth = require('./middleware/auth')
 dotenv.config()
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+// const url = 'mongodb://localhost:27017';
 const client = new MongoClient(process.env.MONGO_URI);
 
 // Database Name
