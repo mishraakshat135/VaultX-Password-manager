@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../index.css'
-import github from "../assets/github.png"
+import github from "../assets/github.webp"
 import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {

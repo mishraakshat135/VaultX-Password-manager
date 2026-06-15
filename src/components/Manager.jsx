@@ -1,11 +1,11 @@
 import React from 'react'
-import eye from "../assets/eye.png"
-import hidden from "../assets/hidden.png"
+import eye from "../assets/eye.webp"
+import hidden from "../assets/hidden.webp"
 import { useRef, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom"
-import vault from "../assets/vault.png";
+import vault from "../assets/vault.webp";
 import { API_URL } from "../config";
 
 

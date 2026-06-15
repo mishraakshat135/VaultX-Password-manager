@@ -43,7 +43,7 @@ app.get('/', auth, async (req, res) => {
 
 app.post('/',auth, async (req, res) => {
     try {
-        console.log("Logged in user :", req.user)
+    
         
         const data = {...req.body, userId: req.user.userId}
     
@@ -52,7 +52,7 @@ app.post('/',auth, async (req, res) => {
             data.password,
             process.env.SECRET_KEY
         ).toString()
-        console.log("after encryption")
+     
         data.password = encryptedPassword
         const db = client.db(dbName);
         const collection = db.collection('passwords');
@@ -88,7 +88,7 @@ app.delete('/', auth, async (req, res) => {
 async function startServer() {
     try {
         await client.connect();
-        console.log("MongoDB Connected");
+      
 
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);

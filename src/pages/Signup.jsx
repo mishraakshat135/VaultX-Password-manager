@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import signupvault from '../assets/signup-vault.png'
-import logo from '../assets/logo.png'
+import signupvault from '../assets/signup-vault.webp'
+import logo from '../assets/logo.webp'
 import { API_URL } from "../config";
 
 const Signup = () => {
